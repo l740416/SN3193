@@ -5,6 +5,11 @@
 #include "SN3193.h"
 //#include <Wire.h>
 
+//
+// GND: 11010000 (0x68)
+// VDD: 11010110 (0xD6)
+// SCL: 11010010 (0xD2)
+// SDA: 11010100 (0xD4)
 #define I2C_ADDR 0x68
 
 // I2C commands
@@ -29,9 +34,16 @@
 #define LED_CONTROL_REG        0x1D
 #define RESET_REG              0x2F
 
+SN3193::SN3193(uint8_t i2cAddress) {
+  _ledctrl = 0;
+  _exist = false;
+  address = i2cAddress;
+}
+
 SN3193::SN3193() {
   _ledctrl = 0;
   _exist = false;
+  address = I2C_ADDR;
 }
 
 #if defined(ARDUINO_ARCH_ESP8266)
@@ -41,7 +53,7 @@ bool SN3193::begin(int SDA_pin, int SCL_pin) {
 bool SN3193::begin() {
     Wire.begin();
 #endif
-    Wire.beginTransmission(I2C_ADDR);
+    Wire.beginTransmission(address);
     if (Wire.endTransmission() == 0) {
         _exist = true;
     }
@@ -146,7 +158,7 @@ void SN3193::turnOff(uint8_t ch)
 
 
 void SN3193::write8(uint8_t a, uint8_t d) {
-    Wire.beginTransmission(I2C_ADDR); // start transmission to device 
+    Wire.beginTransmission(address); // start transmission to device 
 #if (ARDUINO >= 100)
     Wire.write(a); // sends register address to read from
     Wire.write(d);  // write data

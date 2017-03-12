@@ -25,6 +25,7 @@ class SN3193
 {
   public:
     SN3193();
+    SN3193(uint8_t i2cAddress);
 #if defined(ARDUINO_ARCH_ESP8266)
     bool begin(int SDA_pin, int SCL_pin);
 #else
@@ -47,6 +48,7 @@ class SN3193
     void    write8(uint8_t a, uint8_t d);
     bool    _exist;
     uint8_t _ledctrl;
+    uint8_t  address;
 };
 
 #endif
