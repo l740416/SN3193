@@ -1,12 +1,15 @@
 #include <Wire.h>
 #include <SN3193.h>
 
+#define SDA 5
+#define SCL 4
+
 
 SN3193 sn3193;
   
 void setup() {
-  Serial.begin(9600);
-  if (!sn3193.begin()) {
+  Serial.begin(57600);
+  if (!sn3193.begin(SDA, SCL)) {
   	Serial.println("Could not find a valid SN3193 controller, check wiring!");
   	while (1) {}
   }

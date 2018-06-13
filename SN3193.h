@@ -31,6 +31,7 @@ class SN3193
 #else
     bool begin();
 #endif
+		bool check();
     bool exist();
     void powerOn();
     void powerOff();

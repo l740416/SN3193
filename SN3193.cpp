@@ -6,10 +6,10 @@
 //#include <Wire.h>
 
 //
-// GND: 11010000 (0x68)
-// VDD: 11010110 (0xD6)
-// SCL: 11010010 (0xD2)
-// SDA: 11010100 (0xD4)
+// GND: 1101000 (0x68)
+// VDD: 1101011 (0x6B)
+// SCL: 1101001 (0x69)
+// SDA: 1101010 (0x6A)
 #define I2C_ADDR 0x68
 
 // I2C commands
@@ -60,8 +60,17 @@ bool SN3193::begin() {
     return _exist;
 }
 
+
+bool SN3193::check() {
+    Wire.beginTransmission(address);
+    if (Wire.endTransmission() == 0) {
+        _exist = true;
+    }
+    return _exist;
+}
+
 bool SN3193::exist() 
-{
+{	
     return _exist;
 }
 
